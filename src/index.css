@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins', sans-serif; /* or whatever you're using */
+  background: linear-gradient(135deg, #FFC2E4, #FFDAF0);
+  min-height: 100vh;
+  color: #8F0046; /* Default text color */
 }
 
 code {

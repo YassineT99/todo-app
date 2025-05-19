@@ -1,0 +1,60 @@
+/* Import Poppins font from Google Fonts with different weights */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Main navbar container styling */
+.navbar {
+    display: flex;                    /* Makes the navbar a flex container */
+    justify-content: flex-end;        /* Aligns items to the right side */
+    align-items: center;              /* Centers items vertically */
+    padding: .5rem 2rem;              /* Top/bottom: 0.5rem, Left/right: 2rem */
+    background-color: white;          /* White background */
+    width: 37%;                       /* Takes up 37% of parent width */
+    margin-top: 2cqmin;               /* Margin from top using container query units */
+    border-radius: 0px 200px 200px 0px; /* Rounded corners on right side only */
+    box-shadow: 2px 4px 13px 0px rgba(0, 0, 0, 0.171); /* Subtle drop shadow */
+    font-family: poppins, sans-serif; /* Sets Poppins as primary font */
+    font-weight: 600;                 /* Semi-bold font weight */
+}
+
+/* Container for navigation links */
+.navbar_links {
+    list-style: none;                 /* Removes bullet points */
+    display: flex;                    /* Makes links display in a row */
+    padding-right: 3cap;             /* Right padding using cap units */
+    gap: 10rem;                      /* Space between each link */
+}
+
+/* Base styling for all navigation links */
+.navbar_links a {
+    text-decoration: none;            /* Removes underline from links */
+    font-weight: 500;                /* Medium font weight */
+    color: #CB0059;                  /* Pink text color */
+    transition: all 0.3s;            /* Smooth transition for all properties */
+}
+
+/* Hover state for links */
+.navbar_links a:hover {
+    color: #FFBDDA;                  /* Lighter pink on hover */
+}
+
+/* Specific styling for nav-link class */
+.navbar_links .nav-link {
+    text-decoration: none;           /* Removes underline */
+    font-weight: 500;               /* Medium font weight */
+    color: #CB0059;                 /* Pink text color */
+    transition: all 0.3s;           /* Smooth transition */
+    padding: 0.5rem 1rem;          /* Padding around link text */
+    border-radius: 20px;           /* Rounded corners for hover/active states */
+}
+
+/* Active state styling */
+.navbar_links .nav-link.active {
+    background-color: #CB0059;      /* Pink background */
+    color: white;                   /* White text */
+    box-shadow: 0 2px 8px rgba(203, 0, 89, 0.2); /* Subtle glow effect */
+}
+
+/* Hover state for non-active links */
+.navbar_links .nav-link:hover:not(.active) {
+    color: #FFBDDA;                /* Lighter pink on hover */
+}
