@@ -1,60 +1,167 @@
-/* Import Poppins font from Google Fonts with different weights */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
-/* Main navbar container styling */
+/* === NAVBAR BASE === */
 .navbar {
-    display: flex;                    /* Makes the navbar a flex container */
-    justify-content: flex-end;        /* Aligns items to the right side */
-    align-items: center;              /* Centers items vertically */
-    padding: .5rem 2rem;              /* Top/bottom: 0.5rem, Left/right: 2rem */
-    background-color: white;          /* White background */
-    width: 37%;                       /* Takes up 37% of parent width */
-    margin-top: 2cqmin;               /* Margin from top using container query units */
-    border-radius: 0px 200px 200px 0px; /* Rounded corners on right side only */
-    box-shadow: 2px 4px 13px 0px rgba(0, 0, 0, 0.171); /* Subtle drop shadow */
-    font-family: poppins, sans-serif; /* Sets Poppins as primary font */
-    font-weight: 600;                 /* Semi-bold font weight */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem 2rem;
+  background: white;
+  width: 30%;
+  margin-top: 2cqmin;
+  border-radius: 0 200px 200px 0;
+  box-shadow: 2px 4px 13px rgba(0,0,0,0.171);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
-/* Container for navigation links */
+/* === NAV LINKS (DESKTOP) === */
 .navbar_links {
-    list-style: none;                 /* Removes bullet points */
-    display: flex;                    /* Makes links display in a row */
-    padding-right: 3cap;             /* Right padding using cap units */
-    gap: 10rem;                      /* Space between each link */
+  position: relative;
+  display: flex;
+  list-style: none;
+  gap: clamp(2rem, 5vw, 8rem); /* consistent gap for all screen sizes */
+  padding-right: 3cap;
+  z-index: 1;
+  align-items: center;
 }
 
-/* Base styling for all navigation links */
-.navbar_links a {
-    text-decoration: none;            /* Removes underline from links */
-    font-weight: 500;                /* Medium font weight */
-    color: #CB0059;                  /* Pink text color */
-    transition: all 0.3s;            /* Smooth transition for all properties */
+/* === NAV LINK ITEM === */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  color: #CB0059;
+  transition: color 0.3s;
+  z-index: 2;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
 
-/* Hover state for links */
-.navbar_links a:hover {
-    color: #FFBDDA;                  /* Lighter pink on hover */
+.nav-link.active,
+.nav-link.active:visited,
+.nav-link.active:focus {
+  color: white !important;
+  z-index: 2;
 }
 
-/* Specific styling for nav-link class */
-.navbar_links .nav-link {
-    text-decoration: none;           /* Removes underline */
-    font-weight: 500;               /* Medium font weight */
-    color: #CB0059;                 /* Pink text color */
-    transition: all 0.3s;           /* Smooth transition */
-    padding: 0.5rem 1rem;          /* Padding around link text */
-    border-radius: 20px;           /* Rounded corners for hover/active states */
+/* === HIGHLIGHT === */
+.nav-slide-highlight {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  background: #CB0059;
+  border-radius: 20px;
+  z-index: 0;
+  pointer-events: none; /* Prevent highlight from blocking clicks */
+  box-shadow: 0 2px 8px #cb005933;
+  opacity: 0; /* Hide by default, GSAP sets to 1 */
+  transition: opacity 0.15s;
 }
 
-/* Active state styling */
-.navbar_links .nav-link.active {
-    background-color: #CB0059;      /* Pink background */
-    color: white;                   /* White text */
-    box-shadow: 0 2px 8px rgba(203, 0, 89, 0.2); /* Subtle glow effect */
+/* === HAMBURGER BUTTON === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  padding: 0;
+  gap: 3px;
 }
 
-/* Hover state for non-active links */
-.navbar_links .nav-link:hover:not(.active) {
-    color: #FFBDDA;                /* Lighter pink on hover */
+.hamburger span {
+  display: block;
+  width: 16px;
+  height: 3px;
+  background: #CB0059;
+  border-radius: 6px;
+  transition: all 0.25s cubic-bezier(.4,2,.6,1);
+  position: relative;
+  box-shadow: 0 1px 2px #cb005955;
+}
+
+/* Hamburger open animation */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* === MOBILE STYLES === */
+@media screen and (max-width: 1219px) {
+  .navbar {
+    justify-content: space-between;
+    padding: 1rem;
+    width: 50px;
+    border-radius: 0px 100px 100px 0px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar_links {
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    width: 200px;
+    padding: 2rem;
+    margin-left: 20px;
+
+    /* Hamburger panel animation (only works if always rendered) */
+    transform: scaleX(0.5) scaleY(0.8); /* Start small/scaled down */
+    transform-origin: left top;          /* Animate from top left corner */
+    opacity: 0;                         /* Start hidden */
+    pointer-events: none;                /* Prevent interaction when hidden */
+    gap: 2rem;                          /* Consistent gap for mobile */
+    border-radius: 50px;
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.1);
+
+    /* Animate transform and opacity for panel open/close */
+    transition:
+      transform 0.35s cubic-bezier(.4,2,.6,1),
+      opacity 0.25s cubic-bezier(.4,2,.6,1);
+  }
+
+  .navbar_links.active {
+    transform: scaleX(1) scaleY(1);     /* Full size when open */
+    opacity: 1;                         /* Fully visible */
+    pointer-events: auto;               /* Allow interaction */
+    transition:
+      transform 0.35s cubic-bezier(.4,2,.6,1),
+      opacity 0.25s cubic-bezier(.4,2,.6,1);
+  }
+
+  .nav-slide-highlight {
+    transition: all 0.3s ease;
+  }
+
+  /* Animate nav links in panel */
+  .navbar_links li {
+    opacity: 0;
+    transition:
+      opacity 0.3s cubic-bezier(.4,2,.6,1);
+  }
+  .navbar_links.active li {
+    opacity: 1;
+  }
+  /* Stagger effect for each link */
+  .navbar_links.active li:nth-child(1) { transition-delay: 0.10s; }
+  .navbar_links.active li:nth-child(2) { transition-delay: 0.18s; }
+  .navbar_links.active li:nth-child(3) { transition-delay: 0.26s; }
 }
