@@ -41,7 +41,22 @@
   margin-top: 1rem;
 }
 
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .task-item.completed {
   text-decoration: line-through;
   color: #aaa;
+}
+
+.task-item button[aria-label="Edit task"] {
+  visibility: hidden;
+  transition: color 0.2s;
+}
+.task-item:hover button[aria-label="Edit task"] {
+  visibility: visible;
+  color: #007bff;
 }

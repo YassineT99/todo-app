@@ -38,6 +38,22 @@ export default function TaskList() {
     window.GlobalState.set({ tasks: updatedTasks });
   };
 
+  // Handler for deleting a task
+  const handleDeleteTask = (id) => {
+    const updatedTasks = tasks.filter(task => task.id !== id);
+    // Adjust inputIndex if needed
+    const newInputIndex = inputIndex > updatedTasks.length ? updatedTasks.length : inputIndex;
+    window.GlobalState.set({ tasks: updatedTasks, inputIndex: newInputIndex });
+  };
+
+  // Handler for editing a task
+  const handleEditTask = (id, newText) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, text: newText } : task
+    );
+    window.GlobalState.set({ tasks: updatedTasks });
+  };
+
   // Build the list with the input at the current inputIndex
   const rows = [];
   for (let i = 0; i <= tasks.length; i++) {
@@ -54,6 +70,8 @@ export default function TaskList() {
           key={tasks[i].id}
           task={tasks[i]}
           onToggle={handleToggleTask}
+          onDelete={handleDeleteTask}
+          onEdit={handleEditTask} // Pass edit handler
         />
       );
     }
