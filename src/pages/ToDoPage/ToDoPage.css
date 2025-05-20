@@ -1,0 +1,47 @@
+.todo-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.todo-list {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 2rem 2.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.todo-list ul {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.todo-list ul li {
+  border-bottom: 1px solid #eee;
+  padding: 0.5em 0;
+}
+
+/* Remove the divider from the last item */
+.todo-list ul li:last-child {
+  border-bottom: none;
+}
+
+.todo-list .task-input {
+  margin-top: 1rem;
+}
+
+.task-item.completed {
+  text-decoration: line-through;
+  color: #aaa;
+}

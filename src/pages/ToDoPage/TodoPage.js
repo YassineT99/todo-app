@@ -1,10 +1,11 @@
-import './ToDoPage.css';
+import React from 'react';
+import TaskList from '../../components/tasklist/tasklist';
+import './TodoPage.css'
 
-export default function TodoPage() {
+export default function ToDoPage() {
   return (
-    <div>
-      <h1>Your Todos</h1>
-      {/* todo list component will go here */}
+    <div className="todo-page">
+      <TaskList />
     </div>
   );
 }
