@@ -2,23 +2,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
 }
 
+/* 
+  Todo card container:
+  - White background, rounded corners, shadow for elevation
+  - Fixed max width on desktop, shrinks on mobile
+  - Uses flex to stack content vertically
+*/
 .todo-list {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.10);
   padding: 2rem 2.5rem;
-  min-width: 320px;
-  max-width: 400px;
-  width: 100%;
   min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  max-width: 400px;   /* Max width for desktop */
+  width: 100%;        /* Allows shrinking on small screens */
+  box-sizing: border-box;
+  margin: 0 auto;     /* Center horizontally */
 }
 
+/* 
+  Task list (ul):
+  - Removes default list styles
+  - Makes the list scrollable if too long
+*/
 .todo-list ul {
   flex: 1 1 auto;
   margin: 0;
@@ -27,36 +41,226 @@
   overflow-y: auto;
 }
 
+/* 
+  Each task item (li):
+  - Adds a divider between tasks
+*/
 .todo-list ul li {
   border-bottom: 1px solid #eee;
   padding: 0.5em 0;
 }
 
-/* Remove the divider from the last item */
+/* 
+  Removes the divider from the last task
+*/
 .todo-list ul li:last-child {
   border-bottom: none;
 }
 
+/* 
+  Task input row:
+  - Uses a 3-column grid: [checkbox] [input] [delete button]
+  - Aligns input with tasks
+*/
 .todo-list .task-input {
-  margin-top: 1rem;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: 2em 1fr 2em;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.2em 0;
+  background: transparent;
 }
 
+/* 
+  Input field for adding tasks:
+  - Matches the style of task text
+  - No border or background for seamless look
+*/
+.task-input input[type="text"] {
+  font-size: 1.15em;
+  font-family: poppins, sans-serif;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding: 0;
+  color: #8F0046;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  line-height: 1.5;
+  height: 1.5em;
+  vertical-align: middle;
+}
+
+/* 
+  Placeholder text for input:
+  - Lighter color for hint
+*/
+.task-input input[type="text"]::placeholder {
+  color: #8f0045a1; /* #CB0059 at 60% opacity */
+  font-weight: 600;
+  font-family: poppins, sans-serif;
+}
+
+/* 
+  Hides the submit (Add) button for a cleaner UI
+*/
+.task-input button[type="submit"] {
+  display: none;
+}
+
+/* 
+  Each task row:
+  - 3-column grid: [checkbox] [text+edit] [delete]
+*/
 .task-item {
+  display: grid;
+  grid-template-columns: 2em 1fr 2em;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.2em 0;
+}
+
+/* 
+  Task text and edit button container:
+  - Flex aligns text and edit icon
+  - Ensures text wraps and is left-aligned
+*/
+.task-item .task-text {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  min-width: 0;
+  word-break: break-word;
+  text-align: left;
 }
 
-.task-item.completed {
+/* 
+  Task text style:
+  - Matches input style for consistency
+*/
+.task-item .task-text,
+.task-item .task-text span {
+  font-size: 1.15em;
+  font-family: poppins, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* 
+  Completed task text:
+  - Strikethrough and lighter color
+*/
+.task-item .task-text .completed {
   text-decoration: line-through;
-  color: #aaa;
+  color: #ffa5cc;
 }
 
+/* 
+  Edit (pencil) button:
+  - Hidden by default, appears on hover
+*/
 .task-item button[aria-label="Edit task"] {
-  visibility: hidden;
-  transition: color 0.2s;
+  opacity: 0;
+  transform: translateX(10px);
+  pointer-events: none;
 }
 .task-item:hover button[aria-label="Edit task"] {
-  visibility: visible;
-  color: #007bff;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 
+  Custom checkbox style:
+  - Larger, rounded, pink border
+  - Pink fill when checked
+*/
+.task-item input[type="checkbox"] {
+  width: 2em;
+  height: 2em;
+  accent-color: #CB0059;
+  border-radius: 8px;
+  border: 2px solid rgba(203, 0, 89, 0.7);
+  background: #fff;
+  transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+  cursor: pointer;
+  margin-right: 0.7em;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  position: relative;
+}
+.task-item input[type="checkbox"]:checked {
+  background: #CB0059;
+  border-color: #CB0059;
+}
+/* Custom checkmark for checked state */
+.task-item input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0.55em;
+  top: 0.25em;
+  width: 0.4em;
+  height: 0.9em;
+  border: solid #fff;
+  border-width: 0 0.22em 0.22em 0;
+  transform: rotate(45deg);
+}
+
+/* 
+  Editing input (when editing a task):
+  - Matches task text style
+  - Pink border for focus
+*/
+.task-text input[type="text"] {
+  font-size: 1.15em;
+  font-family: poppins, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #8F0046;
+  background: transparent;
+  border: 2px solid rgba(203, 0, 89, 0.7);
+  outline: none;
+  border-radius: 8px;
+  width: 100%;
+  min-width: 0;
+  padding: 0 0.25em;
+  box-sizing: border-box;
+  box-shadow: none;
+  margin: 0;
+  vertical-align: middle;
+  transition: border-color 0.2s;
+}
+
+/* 
+  Responsive: 
+  - On small screens, shrink the card proportionally (like Figma's scale)
+  - Keeps all inner spacing and layout the same, just smaller
+*/
+@media (max-width: 600px) {
+  .todo-list {
+    max-width: 95vw !important;
+  }
+}
+@media (max-width: 430px) {
+  .todo-list {
+    transform: scale(0.85);
+    transform-origin: top center;
+    width: 100vw;
+    max-width: none;
+  }
+}
+@media (max-width: 400px) {
+  .todo-list {
+    max-width: 99vw !important;
+  }
+}
+@media (max-width: 370px) {
+  .todo-list {
+    transform: scale(0.75);
+  }
 }

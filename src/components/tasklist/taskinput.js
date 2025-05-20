@@ -15,16 +15,18 @@ export default function TaskInput({ onAdd }) {
 
   return (
     // Form with input and button
-    <form onSubmit={handleSubmit} className="task-input">
-      {/* Controlled input for task text */}
+    <form onSubmit={handleSubmit} className="task-input" style={{ display: 'grid', gridTemplateColumns: '2em 1fr 2em', alignItems: 'center', gap: '0.5em', padding: '0.2em 0' }}>
+      {/* Empty cell for checkbox column */}
+      <span />
+      {/* Input field in the text column */}
       <input
         type="text"
         placeholder="Add a new task..."
         value={text}
         onChange={e => setText(e.target.value)} // Updates local state on change
       />
-      {/* Button to submit the form */}
-      <button type="submit">Add</button>
+      {/* Empty cell for delete button column */}
+      <span />
     </form>
   );
 }

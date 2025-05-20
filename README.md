@@ -12,6 +12,7 @@ Add, complete, edit, and manage your tasks in a Trello-like interface where the 
 - Edit tasks inline with a pencil icon
 - Persistent state across navigation
 - Responsive, clean UI
+- Smooth GSAP animations for UI elements
 
 ---
 
@@ -21,12 +22,21 @@ Add, complete, edit, and manage your tasks in a Trello-like interface where the 
    ```bash
    npm install
    ```
+   This will install all required packages.
 
 2. **Run the app:**
    ```bash
    npm start
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Dependencies
+
+- **react** (UI library)
+- **react-dom** (DOM bindings for React)
+- **gsap** (GreenSock Animation Platform, for UI animations)
 
 ---
 

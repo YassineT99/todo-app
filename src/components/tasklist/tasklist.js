@@ -3,17 +3,22 @@ import TaskItem from './taskitem';
 import TaskInput from './taskinput';
 import { useGlobalState } from '../../GlobalState';
 
-// TaskList component: manages the list of tasks and the moving input bar
+/*
+  TaskList component:
+  - Manages the list of tasks and the position of the input bar.
+  - Handles adding, toggling, editing, and deleting tasks.
+  - Uses global state for tasks and input position.
+*/
 export default function TaskList() {
-  // Get tasks and inputIndex from global state (inputIndex persists across navigation)
+  // Get the current list of tasks and the input bar position from global state
   const { tasks = [], inputIndex = 0 } = useGlobalState();
 
   // Handler for adding a new task at the current input position
   const handleAddTask = (text) => {
     const newTask = {
-      id: Date.now(),
-      text,
-      completed: false
+      id: Date.now(),      // Unique ID based on timestamp
+      text,                // Task text from input
+      completed: false     // New tasks start as not completed
     };
     // Insert the new task at the inputIndex position
     const updatedTasks = [
@@ -28,9 +33,9 @@ export default function TaskList() {
     });
   };
 
-  // Handler for toggling task completion
+  // Handler for toggling a task's completion status
   const handleToggleTask = (id) => {
-    // Toggle the completed property for the clicked task
+    // Flip the 'completed' property for the clicked task
     const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
@@ -40,21 +45,24 @@ export default function TaskList() {
 
   // Handler for deleting a task
   const handleDeleteTask = (id) => {
+    // Remove the task with the given id
     const updatedTasks = tasks.filter(task => task.id !== id);
-    // Adjust inputIndex if needed
+    // Adjust inputIndex if needed (so input doesn't go out of bounds)
     const newInputIndex = inputIndex > updatedTasks.length ? updatedTasks.length : inputIndex;
     window.GlobalState.set({ tasks: updatedTasks, inputIndex: newInputIndex });
   };
 
-  // Handler for editing a task
+  // Handler for editing a task's text
   const handleEditTask = (id, newText) => {
+    // Update the text of the task with the given id
     const updatedTasks = tasks.map(task =>
       task.id === id ? { ...task, text: newText } : task
     );
     window.GlobalState.set({ tasks: updatedTasks });
   };
 
-  // Build the list with the input at the current inputIndex
+  // Build the list of rows (TaskInput and TaskItem components)
+  // The input bar appears at the current inputIndex position
   const rows = [];
   for (let i = 0; i <= tasks.length; i++) {
     if (i === inputIndex) {
@@ -77,6 +85,7 @@ export default function TaskList() {
     }
   }
 
+  // Render the todo list as a styled card with a scrollable list of tasks
   return (
     <div className="todo-list">
       <ul>
