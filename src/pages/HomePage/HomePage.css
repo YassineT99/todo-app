@@ -1,7 +1,46 @@
-.todopreview {
-    display: block;
-    position: relative;
+.preview-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    height: 100%;
+    height: 100%;         
+}
+
+.description {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #8F0046;
+    text-align: center;
+    margin: 0 2vh;
+
+
+}
+
+.todo-preview {
+    margin: 4vh;
+    width: 40vh;
+    height: 60vh;
+    aspect-ratio: 2 / 3;  
     background-color: white;
+    border-radius: 50px;
+    box-shadow: 2px 4px 13px rgba(0, 0, 0, 0.116);
+}
+
+
+
+@media screen and (max-width: 1219px) {
+    .preview-container {
+        flex-direction: column;
+        position: static;      /* Remove absolute positioning */
+        top: auto;             /* Reset top */
+        left: auto;            /* Reset left */
+        transform: none;       /* Remove transform */
+        width: 100vw;          /* Optional: ensure full width */
+        height: auto;          /* Optional: let height grow */
+    }
 }
