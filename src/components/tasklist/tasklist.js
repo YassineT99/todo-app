@@ -88,12 +88,17 @@ export default function TaskList() {
   // Render the todo list as a styled card with a scrollable list of tasks
   return (
     <div className="todo-list">
-      <ul>
-        {/* Render each row (either a TaskInput or TaskItem) inside a list item */}
-        {rows.map((row, idx) => (
-          <li key={row.key || idx}>{row}</li>
-        ))}
-      </ul>
+      <div className="todo-list-topbar">
+        Task List
+      </div>
+      <div className="todo-list-content">
+        <ul>
+          {/* Render each row (either a TaskInput or TaskItem) inside a list item */}
+          {rows.map((row, idx) => (
+            <li key={row.key || idx}>{row}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
