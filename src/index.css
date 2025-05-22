@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
+html {
+  height: 100%;
+  overflow-y: auto;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,10 +12,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Poppins', sans-serif; /* or whatever you're using */
-  background: linear-gradient(135deg, #FFC2E4, #FFDAF0);
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #FFC2E4, #FFDAF0) fixed;
   min-height: 100vh;
-  color: #8F0046; /* Default text color */
+  color: #8F0046;
+  overflow-y: auto; /* Changed from hidden to auto */
 }
 
 code {

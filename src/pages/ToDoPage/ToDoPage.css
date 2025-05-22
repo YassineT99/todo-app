@@ -1,10 +1,12 @@
 .todo-page {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 0;
+  justify-content: center;      /* Center horizontally */
+  align-items: flex-start;      /* Align to top */
+  padding-top: 2rem;
   margin: 0;
+  margin-top: 3rem;
+  position: relative;
+  overflow: auto;               /* Only scroll when needed */
 }
 
 /* 
@@ -17,41 +19,52 @@
   background: #fff3f8;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
-  min-height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   max-width: 600px;
-  min-height: 700px;
-  /* Max width for desktop */
-  width: 100%;
-  height: 100%;
-  /* Allows shrinking on small screens */
+  width: 90%;
   box-sizing: border-box;
   margin: 0 auto;
-  overflow: hidden; /* Ensures rounded corners for the top bar */
+  min-height: 400px;
+  position: sticky;
+  top: 2rem;
+  height: fit-content; /* Change from auto to fit-content */
 }
 
-/* 
-  Task list (ul):
-  - Removes default list styles
-  - Makes the list scrollable if too long
-*/
-.todo-list ul {
-  flex: 1 1 auto;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  overflow-y: auto;
+/* =========================
+   Header / Top Bar
+   ========================= */
+.todo-list-topbar {
+  background: #ffe3f1;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.2rem;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(133, 40, 76, 0.178);
+  width: 100%;
+  font-size: 1.15em;
+  font-family: poppins, sans-serif;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #8F0046;
+  text-align: center;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
 }
 
-/* 
-  Each task item (li):
-  - Adds a divider between tasks
-*/
-.todo-list ul li {
-  border-bottom: 1px solid #eee;
-  padding: 0.5em 0;
+/* =========================
+   Content Area
+   ========================= */
+.todo-list-content {
+  padding: 1rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
 }
 
 /* 
@@ -110,10 +123,28 @@
   display: none;
 }
 
+/* =========================
+   Task List
+   ========================= */
+.todo-list ul {
+  flex: 1;
+  margin: 1.5rem 0 0 0;      /* Space above the task list */
+  padding: 0;
+  list-style: none;
+  overflow-y: visible;
+  min-height: 0;
+}
+
 /* 
-  Each task row:
-  - 3-column grid: [checkbox] [text+edit] [delete]
+Adds padding between each task item.
 */
+.todo-list ul li {
+  padding: 0.5em 0;
+}
+
+/* =========================
+   Task Item
+   ========================= */
 .task-item {
   background: #ffeaf4;
   border-radius: 12px;
@@ -123,15 +154,11 @@
   align-items: center;
   gap: 0.5em;
   padding: 0.5em 1em;
-  margin-bottom: 0.2em; /* Reduced space between cards */
+  margin-bottom: 0.2em;
   transition: box-shadow 0.2s, background 0.2s;
 }
 
-/* 
-  Task text and edit button container:
-  - Flex aligns text and edit icon
-  - Ensures text wraps and is left-aligned
-*/
+/* Task text and edit button container */
 .task-item .task-text {
   display: flex;
   align-items: center;
@@ -141,10 +168,7 @@
   text-align: left;
 }
 
-/* 
-  Task text style:
-  - Matches input style for consistency
-*/
+/* Task text style */
 .task-item .task-text,
 .task-item .task-text span {
   font-size: 1.15em;
@@ -153,42 +177,33 @@
   line-height: 1.5;
 }
 
-/* 
-  Completed task text:
-  - Strikethrough and lighter color
-*/
+/* Completed task text */
 .task-item .task-text .completed {
   text-decoration: line-through;
   color: #ffa5cc;
 }
 
-/* 
-  Edit (pencil) button:
-  - Hidden by default, appears on hover
-*/
+/* Edit (pencil) button: hidden by default, appears on hover */
 .task-item button[aria-label="Edit task"] {
   opacity: 0;
   transform: translateX(10px);
   pointer-events: none;
 }
-
 .task-item:hover button[aria-label="Edit task"] {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* 
-  Custom checkbox style:
-  - Larger, rounded, pink border
-  - Pink fill when checked
-*/
+/* =========================
+   Custom Checkbox
+   ========================= */
 .task-item input[type="checkbox"] {
   width: 2em;
   height: 2em;
   accent-color: #CB0059;
   border-radius: 8px;
   border: 2px solid rgba(203, 0, 89, 0.7);
-  background: #fff3f8;
+  background: #ffeaf4;
   transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
   cursor: pointer;
   margin-right: 0.7em;
@@ -197,13 +212,10 @@
   outline: none;
   position: relative;
 }
-
 .task-item input[type="checkbox"]:checked {
   background: #CB0059;
   border-color: #CB0059;
 }
-
-/* Custom checkmark for checked state */
 .task-item input[type="checkbox"]:checked::after {
   content: '';
   display: block;
@@ -217,11 +229,9 @@
   transform: rotate(45deg);
 }
 
-/* 
-  Editing input (when editing a task):
-  - Matches task text style
-  - Pink border for focus
-*/
+/* =========================
+   Editing State
+   ========================= */
 .task-text input[type="text"] {
   font-size: 1.15em;
   font-family: poppins, sans-serif;
@@ -242,73 +252,17 @@
   transition: border-color 0.2s;
 }
 
-/* 
-  Top bar for the todo list:
-  - Fixed height, like a window bar
-  - Light pink background, rounded top corners
-  - Centered text, styled like task items
-*/
-.todo-list-topbar {
-  background: #ffe3f1;                /* Light pink */
-  border-top-left-radius: 18px;       /* Match card corners */
-  border-top-right-radius: 18px;
-  height: 2.4rem;                     /* Fixed height like a window bar */
-  display: flex;
-  align-items: center;
-  justify-content: center;            /* Center the text horizontally */
-  padding: 0 1.2rem;                  /* Horizontal padding */
-  box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(133, 40, 76, 0.178);
-  width: 100%;
-  font-size: 1.15em;                  /* Match task item text */
-  font-family: poppins, sans-serif;
-  font-weight: 600;
-  line-height: 1.5;
-  color: #8F0046;                     /* Match task item text color */
-  text-align: center;
-  letter-spacing: 0.01em;
-}
-
-/* 
-  New style for todo list content area:
-  - Padding for inner spacing
-  - Flex column layout
-*/
-.todo-list-content {
-  padding: 1rem 1.5rem; /* or your preferred padding */
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 
-  Responsive: 
-  - On small screens, shrink the card proportionally (like Figma's scale)
-  - Keeps all inner spacing and layout the same, just smaller
-*/
+/* =========================
+   Responsive
+   ========================= */
 @media (max-width: 600px) {
   .todo-list {
     max-width: 95vw !important;
   }
 }
-
 @media (max-width: 430px) {
   .todo-list {
-    transform: scale(0.85);
-    transform-origin: top center;
-    width: 100vw;
-    max-width: none;
-  }
-}
-
-@media (max-width: 400px) {
-  .todo-list {
-    max-width: 99vw !important;
-  }
-}
-
-@media (max-width: 370px) {
-  .todo-list {
-    transform: scale(0.75);
+    width: 95%;
+    transform: none;
   }
 }

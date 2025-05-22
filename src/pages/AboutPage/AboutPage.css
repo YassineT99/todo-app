@@ -1,0 +1,51 @@
+/* 
+  About Page Container:
+  - Centered modal/card style
+  - Responsive width and padding
+  - Scrolls internally if content overflows viewport
+*/
+.about-page {
+    background-color: #ffeaf4;
+    margin: 0;
+    padding: 2rem;
+    border-radius: 40px;
+    width: 90%;
+    max-width: 800px;
+    min-width: 200px;
+    position: fixed; /* Centered in viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px #ff519a3a;
+    overflow-y: auto; /* Only vertical scroll if needed */
+    max-height: 90vh; /* Prevents overflow beyond viewport */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* 
+  Tablet responsiveness:
+  - Slightly smaller width, padding, and border radius
+  - Lower max-height for shorter screens
+*/
+@media screen and (max-width: 768px) {
+    .about-page {
+        width: 85%;
+        padding: 1.5rem;
+        border-radius: 30px;
+        max-height: 85vh;
+    }
+}
+
+/* 
+  Mobile responsiveness:
+  - Full width, smaller padding and border radius
+  - Lower max-height for small screens
+*/
+@media screen and (max-width: 480px) {
+    .about-page {
+        width: 90%;
+        padding: 1rem;
+        border-radius: 20px;
+        max-height: 80vh;
+    }
+}

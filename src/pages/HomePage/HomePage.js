@@ -36,15 +36,15 @@ export default function HomePage() {
     <div className="preview-container">
       <div className="preview-group">
         <div className="todo-preview" data-preview></div>
-        <div className="description">description 1</div>
+        <div className="description">Add</div>
       </div>
       <div className="preview-group">
         <div className="todo-preview" data-preview></div>
-        <div className="description">description 2</div>
+        <div className="description">Edit</div>
       </div>
       <div className="preview-group">
         <div className="todo-preview" data-preview></div>
-        <div className="description">description 3</div>
+        <div className="description">Remove</div>
       </div>
     </div>
   );
