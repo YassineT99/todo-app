@@ -52,10 +52,13 @@ src/
   pages/
     ToDoPage/
       TodoPage.js
-      ToDoPage.css
+      TodoPage.css
     HomePage/
       HomePage.js
       HomePage.css
+   AboutPage/
+      AboutPage.js
+      AboutPage.css
   GlobalState.jsx
   App.js
 ```
