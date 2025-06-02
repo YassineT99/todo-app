@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { gsap } from 'gsap';
 import './HomePage.css';
+import PreviewAdd from '../../Assets/Add.png';
+import PreviewEdit from '../../Assets/Edit.png';
+import PreviewRemove from '../../Assets/Remove.png';
 
 export default function HomePage() {
   useEffect(() => {
@@ -35,15 +38,21 @@ export default function HomePage() {
   return (
     <div className="preview-container">
       <div className="preview-group">
-        <div className="todo-preview" data-preview></div>
+        <div className="todo-preview" data-preview>
+          <img src={PreviewAdd} alt="Preview for Adding functionality"></img>
+        </div>
         <div className="description">Add</div>
       </div>
       <div className="preview-group">
-        <div className="todo-preview" data-preview></div>
+        <div className="todo-preview" data-preview>
+          <img src={PreviewEdit} alt="Preview for Edit functionality"></img>
+        </div>
         <div className="description">Edit</div>
       </div>
       <div className="preview-group">
-        <div className="todo-preview" data-preview></div>
+        <div className="todo-preview" data-preview>
+          <img src={PreviewRemove} alt="Preview for Remove functionality"></img>
+        </div>
         <div className="description">Remove</div>
       </div>
     </div>
