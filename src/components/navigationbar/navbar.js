@@ -21,6 +21,9 @@ export default function Navbar() {
 
   // Track previous layout mode (mobile/desktop)
   const prevIsMobile = useRef(window.innerWidth <= 1219);
+  
+  // Ref to store current GSAP animation for cleanup
+  const currentAnimation = useRef(null);
 
   /**
    * Animate the highlight to the active link.
@@ -30,7 +33,13 @@ export default function Navbar() {
     const activeLink = navLinksRef.current.find(link => link && link.classList.contains('active'));
     const highlight = highlightRef.current;
     const navLinks = activeLink?.closest('.navbar_links');
+    
     if (!activeLink || !highlight || !navLinks) return;
+
+    // Kill any existing animation to prevent conflicts
+    if (currentAnimation.current) {
+      currentAnimation.current.kill();
+    }
 
     const isMobile = window.innerWidth <= 1219;
     const linkRect = activeLink.getBoundingClientRect();
@@ -41,25 +50,26 @@ export default function Navbar() {
 
     if (isMobile) {
       // Mobile: highlight matches link width and position in column
-      gsap.to(highlight, {
+      currentAnimation.current = gsap.to(highlight, {
         x: activeLink.offsetLeft,
         y: activeLink.offsetTop,
         width: activeLink.offsetWidth,
         height: activeLink.offsetHeight,
         opacity: 1,
         duration,
-        ease: 'power2.out'
+        ease: 'power2.out',
+        overwrite: true // Ensure this animation overwrites any conflicting ones
       });
     } else {
       // Desktop: highlight matches link size and position in row
-      gsap.to(highlight, {
+      currentAnimation.current = gsap.to(highlight, {
         x: linkRect.left - navRect.left,
         y: linkRect.top - navRect.top,
         width: linkRect.width,
         height: linkRect.height,
         opacity: 1,
         duration,
-        ease: 'power2.out'
+        ease: 'power2.out',        overwrite: true // Ensure this animation overwrites any conflicting ones
       });
     }
   };
@@ -67,10 +77,10 @@ export default function Navbar() {
   // Animate or snap highlight on route/menu changes
   useEffect(() => {
     if (menuOpen) {
-      // Snap instantly when opening hamburger panel
-      setTimeout(() => {
+      // Use requestAnimationFrame instead of setTimeout for better timing
+      requestAnimationFrame(() => {
         animateHighlight(true);
-      }, 0);
+      });
     } else {
       animateHighlight();
     }
@@ -84,14 +94,30 @@ export default function Navbar() {
       if (isNowMobile !== prevIsMobile.current) {
         setMenuOpen(false);
         prevIsMobile.current = isNowMobile;
-        animateHighlight(true);
+        // Use requestAnimationFrame for better timing
+        requestAnimationFrame(() => {
+          animateHighlight(true);
+        });
       } else {
-        animateHighlight();
+        // Use requestAnimationFrame for smoother animations
+        requestAnimationFrame(() => {
+          animateHighlight();
+        });
       }
     };
+    
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [location]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (currentAnimation.current) {
+        currentAnimation.current.kill();
+      }
+    };
+  }, []);
 
   return (
     <nav className="navbar">

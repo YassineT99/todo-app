@@ -1,65 +1,60 @@
 import React from 'react';
 import TaskItem from './taskitem';
 import TaskInput from './taskinput';
-import { useGlobalState } from '../../GlobalState';
+import { useTodo } from '../../contexts/TodoContext';
 
 /*
   TaskList component:
   - Manages the list of tasks and the position of the input bar.
-  - Handles adding, toggling, editing, and deleting tasks.
-  - Uses global state for tasks and input position.
+  - Handles adding, toggling, editing, and deleting tasks using Todoist API.
+  - Uses TodoContext for tasks and input position.
 */
-export default function TaskList() {
-  // Get the current list of tasks and the input bar position from global state
-  const { tasks = [], inputIndex = 0 } = useGlobalState();
+export default function TaskList() {  // Get the current list of tasks and the input bar position from TodoContext
+  const { 
+    tasks = [], 
+    inputIndex = 0, 
+    addTask, 
+    toggleTask, 
+    deleteTask, 
+    editTask,
+    loading
+  } = useTodo();
 
   // Handler for adding a new task at the current input position
-  const handleAddTask = (text) => {
-    const newTask = {
-      id: Date.now(),      // Unique ID based on timestamp
-      text,                // Task text from input
-      completed: false     // New tasks start as not completed
-    };
-    // Insert the new task at the inputIndex position
-    const updatedTasks = [
-      ...tasks.slice(0, inputIndex),
-      newTask,
-      ...tasks.slice(inputIndex)
-    ];
-    // Update global state: add new task and move input down one row
-    window.GlobalState.set({
-      tasks: updatedTasks,
-      inputIndex: inputIndex + 1 // Move input down one row
-    });
+  const handleAddTask = async (text) => {
+    try {
+      await addTask(text);
+    } catch (error) {
+      // Error handling is done in the context, just log here
+      console.error('Failed to add task:', error);
+    }
   };
 
   // Handler for toggling a task's completion status
-  const handleToggleTask = (id) => {
-    // Flip the 'completed' property for the clicked task
-    const updatedTasks = tasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    // Update global state with the new tasks array
-    window.GlobalState.set({ tasks: updatedTasks });
+  const handleToggleTask = async (id) => {
+    try {
+      await toggleTask(id);
+    } catch (error) {
+      console.error('Failed to toggle task:', error);
+    }
   };
 
   // Handler for deleting a task
-  const handleDeleteTask = (id) => {
-    // Remove the task with the given id
-    const updatedTasks = tasks.filter(task => task.id !== id);
-    // Adjust inputIndex if needed (so input doesn't go out of bounds)
-    const newInputIndex = inputIndex > updatedTasks.length ? updatedTasks.length : inputIndex;
-    window.GlobalState.set({ tasks: updatedTasks, inputIndex: newInputIndex });
+  const handleDeleteTask = async (id) => {
+    try {
+      await deleteTask(id);
+    } catch (error) {
+      console.error('Failed to delete task:', error);
+    }
   };
 
   // Handler for editing a task's text
-  const handleEditTask = (id, newText) => {
-    // Update the text of the task with the given id
-    const updatedTasks = tasks.map(task =>
-      task.id === id ? { ...task, text: newText } : task
-    );
-    window.GlobalState.set({ tasks: updatedTasks });
-  };
+  const handleEditTask = async (id, newText) => {
+    try {
+      await editTask(id, newText);
+    } catch (error) {
+      console.error('Failed to edit task:', error);
+    }  };
 
   // Build the list of rows (TaskInput and TaskItem components)
   // The input bar appears at the current inputIndex position
@@ -68,7 +63,11 @@ export default function TaskList() {
     if (i === inputIndex) {
       // Render the input bar at the current inputIndex
       rows.push(
-        <TaskInput key="input" onAdd={handleAddTask} />
+        <TaskInput 
+          key="input" 
+          onAdd={handleAddTask} 
+          disabled={loading}
+        />
       );
     }
     if (i < tasks.length) {
@@ -79,7 +78,8 @@ export default function TaskList() {
           task={tasks[i]}
           onToggle={handleToggleTask}
           onDelete={handleDeleteTask}
-          onEdit={handleEditTask} // Pass edit handler
+          onEdit={handleEditTask}
+          disabled={loading}
         />
       );
     }
@@ -87,9 +87,9 @@ export default function TaskList() {
 
   // Render the todo list as a styled card with a scrollable list of tasks
   return (
-    <div className="todo-list">
-      <div className="todo-list-topbar">
+    <div className="todo-list">      <div className="todo-list-topbar">
         Task List
+        {loading && <span className="loading-indicator"><div className="spinner"></div></span>}
       </div>
       <div className="todo-list-content">
         <ul>

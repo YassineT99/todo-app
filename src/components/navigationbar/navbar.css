@@ -58,7 +58,7 @@
   pointer-events: none; /* Prevent highlight from blocking clicks */
   box-shadow: 0 2px 8px #cb005933;
   opacity: 0; /* Hide by default, GSAP sets to 1 */
-  transition: opacity 0.15s;
+  /* Remove transition to prevent conflicts with GSAP */
 }
 
 /* === HAMBURGER BUTTON === */
@@ -144,12 +144,9 @@
     pointer-events: auto;               /* Allow interaction */
     transition:
       transform 0.35s cubic-bezier(.4,2,.6,1),
-      opacity 0.25s cubic-bezier(.4,2,.6,1);
-  }
+      opacity 0.25s cubic-bezier(.4,2,.6,1);  }
 
-  .nav-slide-highlight {
-    transition: all 0.3s ease;
-  }
+  /* Remove transitions that could conflict with GSAP animations */
 
   /* Animate nav links in panel */
   .navbar_links li {
