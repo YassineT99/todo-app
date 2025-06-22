@@ -5,7 +5,7 @@ Features real-world API integration, persistent cloud storage, and a seamless us
 
 ---
 
-## ✨ Features
+## Features
 
 ### Core Functionality
 - **Real API Integration** - Uses Todoist API for genuine cloud persistence
@@ -30,7 +30,7 @@ Features real-world API integration, persistent cloud storage, and a seamless us
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -61,7 +61,7 @@ Features real-world API integration, persistent cloud storage, and a seamless us
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### API Integration
 - **Todoist REST API v2** - Full CRUD operations with proper error handling
@@ -89,7 +89,7 @@ TodoProvider (Context)
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
 ### Core
 - **react** (^18.x) - Modern React with hooks and concurrent features
@@ -107,7 +107,7 @@ TodoProvider (Context)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -146,7 +146,7 @@ src/
 
 ---
 
-## 🎯 Key Technical Decisions
+## Key Technical Decisions
 
 ### Why Todoist API?
 - **Real-world Integration** - Demonstrates actual API consumption patterns
@@ -168,7 +168,7 @@ src/
 
 ---
 
-## 🚀 Production Considerations
+## Production Considerations
 
 ### Current Demo vs. Production
 - **Demo**: Shared task list using common API token for easy testing
@@ -186,13 +186,13 @@ src/
 
 ---
 
-## 📝 License
+## License
 
 MIT License - Feel free to use this project as a learning resource or starting point for your own applications.
 
 ---
 
-## 👨‍💻 Created by
+## Created by
 
 **Yassine Toumi**  
 *Ui/UX Designer and Front-End Developer*
